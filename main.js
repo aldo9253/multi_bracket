@@ -37,11 +37,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Update the variable when the user changes the threshold.
   elimThresholdInput.addEventListener("change", () => {
-    eliminationThreshold = parseInt(elimThresholdInput.value, 10);
-    // Optionally, you can trigger a table update or re-calculate pairings.
-    updateCompetitorsTable();
-  });
+	let value = parseInt(elimThresholdInput.value, 10);
+	
+	if (isNaN(value) || value < 1){
+		value = 1;
+	}
+	if (value > 10){
+		value = 10;
+	}
+	eliminationThreshold = value;
+	elimThresholdInput.value = value;
+	updateCompetitorsTable();
 
+  });
 
   // Save the competitors array to localStorage.
   function saveCompetitors() {
