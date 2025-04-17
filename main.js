@@ -325,11 +325,28 @@ document.addEventListener("DOMContentLoaded", () => {
       if (b.wins !== a.wins) return b.wins - a.wins;
       return a.losses - b.losses;
     });
+
+	//TESTING here as well
+	if (validCompetitors.length === 2) {
+      return [{
+        comp1: validCompetitors[0].name,
+        comp2: validCompetitors[1].name
+      }];
+    }
+
     let groups = {};
     validCompetitors.forEach(comp => {
       if (!groups[comp.losses]) groups[comp.losses] = [];
       groups[comp.losses].push(comp);
     });
+
+	// TESTING HERE
+	if (eliminationThreshold > 2 && groups[0] && groups[0].length === 1) {
+      const lone = groups[0].shift();
+      groups[1] = groups[1] || [];
+      groups[1].push(lone);
+    }
+
     let zeroLoss = groups[0] || [];
     let oneLoss = groups[1] || [];
     if (eliminationThreshold ==2 && zeroLoss.length === 1 && oneLoss.length === 1) {
